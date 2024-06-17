@@ -7,10 +7,10 @@ POST http://localhost:3000/events
 Content-Type: application/json
 
 {
-  "name": "New Event",
-  "description": "New Event Description",
+  "name": "New Event Spot 1",
+  "description": "New Event Description Spot",
   "date": "2022-01-01T00:00:00.000Z",
-  "price": 10
+  "price": 100
 }
 
 ###
@@ -32,3 +32,30 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:3000/events/{{ eventId }}
+
+#Spot 
+###
+GET http://localhost:3000/events/{{eventId}}/spots
+
+###
+# @name createSpot
+
+POST http://localhost:3000/events/{{eventId}}/spots
+Content-Type: application/json
+
+{
+  "name": "A15"
+}
+
+###
+@spotName = {{ createSpot.response.body.name }}
+
+###
+POST http://localhost:3000/events/{{eventId}}/reserve
+Content-Type: application/json
+
+{
+  "spots": ["{{ spotName }}"],
+  "ticket_kind": "full",
+  "email": "gqCZi@example.com"
+}
